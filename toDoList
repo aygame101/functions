@@ -5,11 +5,13 @@ KAXE :
   
 MATHAYM :
   - GUI (Games Users Interface[Menu]) - avec VIANPYRO
+  - Zones (Les differentes zones du serveur) - avec Vianpyro
   - Totem
 
 VIANPYRO :
   - Récompence journalière
   - GUI (Games Users Interface[Menu]) - avec MATHAYM
+  - Zones (Les differentes zones du serveur) - avec MATHAYM
   - Tnt Run
   - Zombie
   - PvP Box
