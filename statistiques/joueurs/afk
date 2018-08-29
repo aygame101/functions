@@ -1,90 +1,77 @@
 #© : AFK 100% Vianpyro
 
-#Objectives
-  scoreboard objectives add AFK dummy
-  scoreboard objectives add AfkAEC dummy
-  scoreboard objectives add AfkAECRVB dummy
+#Ajout d'un AFK/tick a tous les joueurs qui ne sont pas déjà AFK
   scoreboard players add @a[tag=!AFK] AFK 1
-  scoreboard players set #1728000 unplayedDay 1728000
-  scoreboard players set #72000 unplayedHour 72000
-  scoreboard players set #1200 unplayedMin 1200
-  scoreboard players set #20 unplayedSec 20
 
 #Limites
-    scoreboard players add #afkTimer AFK 0
-    scoreboard players set #afkTimerMin AFK 200
-    scoreboard players set #afkTimerMax AFK 18000
   #Temps min
-    execute if score #afkTimer AFK < #afkTimerMin AFK run tellraw @a ["",{"text":"Serveur ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Le réglage de temps minimal d'activitée détectée ne peut être inferieur à 10sec !","color":"red"}]
-    execute if score #afkTimer AFK < #afkTimerMin AFK run scoreboard players set #afkTimer AFK 200
+    execute if score #afkTimer SCORES < #afkTimerMin SCORES run tellraw @a ["",{"text":"§7§lServeur§r §8➤ "},{"text":"Le réglage de temps minimal d'activitée détectée ne peut être inferieur à 10sec !","color":"red"}]
+    execute if score #afkTimer SCORES < #afkTimerMin SCORES run scoreboard players set #afkTimer SCORES 200
   #Temps max
-    execute if score #afkTimer AFK > #afkTimerMax AFK run tellraw @a ["",{"text":"Serveur ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Le réglage de temps maximal d'activitée détectée ne peut être superieur à 15min !","color":"red"}]
-    execute if score #afkTimer AFK > #afkTimerMax AFK run scoreboard players set #afkTimer AFK 18000
+    execute if score #afkTimer SCORES > #afkTimerMax AFK run tellraw @a ["",{"text":"§7§lServeur§r §8➤ "},{"text":"Le réglage de temps maximal d'activitée détectée ne peut être superieur à 15min !","color":"red"}]
+    execute if score #afkTimer SCORES > #afkTimerMax AFK run scoreboard players set #afkTimer SCORES 18000
 
 #Messages
-  execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run team leave @s
-  execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run team leave @s
+  execute as @a[tag=!AFK] if score @s AFK = #afkTimer SCORES run team leave @s
+  execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run team leave @s
   #Temps de "non-jeu"
     #Opérations
       #Days
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 1728000 run scoreboard players set @s unplayedDivisor 1728000
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDay = @s unplayedTicks
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDay /= #1728000 unplayedDay
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedDay
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES unless score @s unplayedDivisor matches 1728000 run scoreboard players set @s unplayedDivisor 1728000
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDay = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDay /= #1728000 unplayedDay
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDivisor *= @s unplayedDay
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
       #Hours
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 72000 run scoreboard players set @s unplayedDivisor 72000
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedHour = @s unplayedTicks
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedHour /= #72000 unplayedHour
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedHour
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES unless score @s unplayedDivisor matches 72000 run scoreboard players set @s unplayedDivisor 72000
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedHour = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedHour /= #72000 unplayedHour
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDivisor *= @s unplayedHour
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
       #Minutes
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 1200 run scoreboard players set @s unplayedDivisor 1200
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedMin = @s unplayedTicks
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedMin /= #1200 unplayedMin
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedMin
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES unless score @s unplayedDivisor matches 1200 run scoreboard players set @s unplayedDivisor 1200
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedMin = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedMin /= #1200 unplayedMin
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDivisor *= @s unplayedMin
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
       #Seconds
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 20 run scoreboard players set @s unplayedDivisor 20
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedSec = @s unplayedTicks
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedSec /= #20 unplayedSec
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedSec
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES unless score @s unplayedDivisor matches 20 run scoreboard players set @s unplayedDivisor 20
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedSec = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedSec /= #20 unplayedSec
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedDivisor *= @s unplayedSec
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
     #Messages
       #Attribution du type de message correspondant
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedSec matches 1.. run scoreboard players set @s unplayedTimeType 0
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedMin matches 1.. run scoreboard players set @s unplayedTimeType 1
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedHour matches 1.. run scoreboard players set @s unplayedTimeType 2
-        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedDay matches 1.. run scoreboard players set @s unplayedTimeType 3
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedSec matches 1.. run scoreboard players set @s unplayedTimeType 0
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedMin matches 1.. run scoreboard players set @s unplayedTimeType 1
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedHour matches 1.. run scoreboard players set @s unplayedTimeType 2
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedDay matches 1.. run scoreboard players set @s unplayedTimeType 3
       #English
         #Seconds
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=0,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=0,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
         #Minutes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=1,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=1,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
         #Hours
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=2,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=2,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
         #Days
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=3,language=0}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"d ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=3,language=0}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"d ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
 
       #Français
         #Secondes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=0,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=0,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
         #Minutes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=1,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=1,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
         #Heures
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=2,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=2,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
         #Jours
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=3,language=1}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"j ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
-  #English
-    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tellraw @a[scores={language=0}] ["",{"text":"§7§lServer§r §8▶ "},{"selector":"@s"},{"text":" is AFK","color":"red"}]
-    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tellraw @a[scores={language=0}] ["",{"text":"§7§lServer§r §8▶ "},{"selector":"@s"},{"text":" is not longer AFK","color":"green"}]
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=3,language=1}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"j ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
   #Français
-    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" est AFK","color":"red"}]
-    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" n'est plus AFK","color":"green"}]
+    execute as @a[tag=!AFK] if score @s AFK = #afkTimer SCORES run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" est AFK","color":"red"}]
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" n'est plus AFK","color":"green"}]
   #Tags
-    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tag @s add AFK
-    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tag @s remove afk
-    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tag @s remove AFK
+    execute as @a[tag=!AFK] if score @s AFK = #afkTimer SCORES run tag @s add AFK
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run tag @s remove afk
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run tag @s remove AFK
 
 #Real AFK with /afk
   execute as @a[tag=AFK,scores={language=0},tag=afk] if score @s afkRly = #afkTimer AFK run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":" You now are considerated as really AFK","color":"green"}]
