@@ -3,8 +3,11 @@
 #Un timer, raison : dans un jeu où vous aurez besoin de la barre d'XP, il suffira de mettre (en boucle) le score "levelTimer" à tous les joueurs qui y jouent
 #Tous les niveaux d'XP, grace au farmer chinoir "Vianpyro" <3
 
+#LE timer
 scoreboard players add @a[tag=!AFK] levelTimer 1
 scoreboard players set @a[scores={levelTimer=3}] levelTimer 0
+
+#LE résulat du farming du chinoir
 execute as @a if entity @s[tag=!AFK,scores={levelTimer=2,level=1}] unless entity @s[nbt={XpLevel:1}] run xp set @s 1 levels
 execute as @a if entity @s[tag=!AFK,scores={levelTimer=2,level=2}] unless entity @s[nbt={XpLevel:2}] run xp set @s 2 levels
 execute as @a if entity @s[tag=!AFK,scores={levelTimer=2,level=3}] unless entity @s[nbt={XpLevel:3}] run xp set @s 3 levels
