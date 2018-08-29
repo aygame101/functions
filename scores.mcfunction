@@ -5,7 +5,10 @@
 
 #SCORES
   scoreboard objectives add SCORES dummy
+  scoreboard players set #18 SCORES 18
   scoreboard players set #20 SCORES 20
+  scoreboard players set #68 SCORES 68
+  scoreboard players set #87 SCORES 87
   scoreboard players set #1200 SCORES 1200
   scoreboard players set #72000 SCORES 72000
   scoreboard players set #1728000 SCORES 1728000
@@ -25,3 +28,10 @@
   #Joueurs
     #Level
       scoreboard objectives add XP dummy
+      scoreboard objectives add level dummy
+      scoreboard objectives add XP2UP dummy
+      scoreboard objectives add XP0 dummy
+      scoreboard objectives add XP1 dummy
+      scoreboard objectives add XP2 dummy
+      scoreboard objectives add XP3 dummy
+      scoreboard objectives add xpDeath minecraft.custom:minecraft.time_since_death
