@@ -1,0 +1,321 @@
+#© : AFK 100% Vianpyro
+
+#Objectives
+  scoreboard objectives add AFK dummy
+  scoreboard objectives add AfkAEC dummy
+  scoreboard objectives add AfkAECRVB dummy
+  scoreboard players add @a[tag=!AFK] AFK 1
+  scoreboard players set #1728000 unplayedDay 1728000
+  scoreboard players set #72000 unplayedHour 72000
+  scoreboard players set #1200 unplayedMin 1200
+  scoreboard players set #20 unplayedSec 20
+
+#Limites
+    scoreboard players add #afkTimer AFK 0
+    scoreboard players set #afkTimerMin AFK 200
+    scoreboard players set #afkTimerMax AFK 18000
+  #Temps min
+    execute if score #afkTimer AFK < #afkTimerMin AFK run tellraw @a ["",{"text":"Serveur ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Le réglage de temps minimal d'activitée détectée ne peut être inferieur à 10sec !","color":"red"}]
+    execute if score #afkTimer AFK < #afkTimerMin AFK run scoreboard players set #afkTimer AFK 200
+  #Temps max
+    execute if score #afkTimer AFK > #afkTimerMax AFK run tellraw @a ["",{"text":"Serveur ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Le réglage de temps maximal d'activitée détectée ne peut être superieur à 15min !","color":"red"}]
+    execute if score #afkTimer AFK > #afkTimerMax AFK run scoreboard players set #afkTimer AFK 18000
+
+#Messages
+  execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run team leave @s
+  execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run team leave @s
+  #Temps de "non-jeu"
+    #Opérations
+      #Days
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 1728000 run scoreboard players set @s unplayedDivisor 1728000
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDay = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDay /= #1728000 unplayedDay
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedDay
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+      #Hours
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 72000 run scoreboard players set @s unplayedDivisor 72000
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedHour = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedHour /= #72000 unplayedHour
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedHour
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+      #Minutes
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 1200 run scoreboard players set @s unplayedDivisor 1200
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedMin = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedMin /= #1200 unplayedMin
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedMin
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+      #Seconds
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK unless score @s unplayedDivisor matches 20 run scoreboard players set @s unplayedDivisor 20
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedSec = @s unplayedTicks
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedSec /= #20 unplayedSec
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedDivisor *= @s unplayedSec
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run scoreboard players operation @s unplayedTicks -= @s unplayedDivisor
+    #Messages
+      #Attribution du type de message correspondant
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedSec matches 1.. run scoreboard players set @s unplayedTimeType 0
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedMin matches 1.. run scoreboard players set @s unplayedTimeType 1
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedHour matches 1.. run scoreboard players set @s unplayedTimeType 2
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if score @s unplayedDay matches 1.. run scoreboard players set @s unplayedTimeType 3
+      #English
+        #Seconds
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=0,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+        #Minutes
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=1,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+        #Hours
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=2,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+        #Days
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=3,language=0}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"d ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
+
+      #Français
+        #Secondes
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=0,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+        #Minutes
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=1,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+        #Heures
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=2,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+        #Jours
+          execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK if entity @s[scores={unplayedTimeType=3,language=1}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"j ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+  #English
+    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tellraw @a[scores={language=0}] ["",{"text":"§7§lServer§r §8▶ "},{"selector":"@s"},{"text":" is AFK","color":"red"}]
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tellraw @a[scores={language=0}] ["",{"text":"§7§lServer§r §8▶ "},{"selector":"@s"},{"text":" is not longer AFK","color":"green"}]
+  #Français
+    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" est AFK","color":"red"}]
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" n'est plus AFK","color":"green"}]
+  #Tags
+    execute as @a[tag=!AFK] if score @s AFK = #afkTimer AFK run tag @s add AFK
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tag @s remove afk
+    execute as @a[tag=AFK] if score @s AFK < #afkTimer AFK run tag @s remove AFK
+
+#Real AFK with /afk
+  execute as @a[tag=AFK,scores={language=0},tag=afk] if score @s afkRly = #afkTimer AFK run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":" You now are considerated as really AFK","color":"green"}]
+  execute as @a[tag=AFK,scores={language=1,statSex=0},tag=afk] if score @s afkRly = #afkTimer AFK run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":" Vous êtes maintenant considéré(e) comme réélement AFK","color":"green"}]
+  execute as @a[tag=AFK,scores={language=1,statSex=1},tag=afk] if score @s afkRly = #afkTimer AFK run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":" Vous êtes maintenant considéré comme réélement AFK","color":"green"}]
+  execute as @a[tag=AFK,scores={language=1,statSex=2},tag=afk] if score @s afkRly = #afkTimer AFK run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":" Vous êtes maintenant considérée comme réélement AFK","color":"green"}]
+  execute as @a[tag=AFK,tag=afk] if score @s afkRly = #afkTimer AFK run tag @s remove afk
+  scoreboard players add @a[tag=AFK,tag=afk] afkRly 1
+
+#Area_effect_cloud
+  scoreboard players set @a AfkAEC 0
+  scoreboard players add @e[type=area_effect_cloud,tag=AFK] AfkAECRVB 1
+  execute as @e[type=area_effect_cloud,tag=AFK] if score @s AfkAECRVB matches 128 run scoreboard players set @s AfkAECRVB 0
+  execute as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK] at @s run scoreboard players set @a[distance=..2] AfkAEC 1
+  execute as @a[tag=AFK] at @s if score @s AfkAEC matches 0 run summon area_effect_cloud ~ ~1.1 ~ {Duration:2,CustomNameVisible:1,Tags:["AFK"]}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 0 run data merge entity @s {CustomName:"\"§0§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 10 run data merge entity @s {CustomName:"\"§1§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 20 run data merge entity @s {CustomName:"\"§2§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 30 run data merge entity @s {CustomName:"\"§3§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 40 run data merge entity @s {CustomName:"\"§4§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 50 run data merge entity @s {CustomName:"\"§5§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 60 run data merge entity @s {CustomName:"\"§6§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 70 run data merge entity @s {CustomName:"\"§7§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 80 run data merge entity @s {CustomName:"\"§8§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 90 run data merge entity @s {CustomName:"\"§9§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 100 run data merge entity @s {CustomName:"\"§a§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 110 run data merge entity @s {CustomName:"\"§b§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 120 run data merge entity @s {CustomName:"\"§c§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 130 run data merge entity @s {CustomName:"\"§d§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 140 run data merge entity @s {CustomName:"\"§e§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] if score @s AfkAECRVB matches 150 run data merge entity @s {CustomName:"\"§lActuellement AFK\""}
+  execute at @a[tag=AFK] as @e[type=minecraft:area_effect_cloud,sort=nearest,limit=1,tag=AFK,distance=..2] run data merge entity @s {Age:0}
+
+#Scores
+  #A
+    scoreboard objectives add afkAnimal minecraft.custom:minecraft.animals_bred
+    scoreboard players set @a[scores={afkAnimal=1..}] AFK 0
+    scoreboard players reset @a[scores={afkAnimal=1..}] afkAnimal
+    #
+    scoreboard objectives add afkAviate minecraft.custom:minecraft.aviate_one_cm
+    scoreboard players set @a[scores={afkAviate=1..}] AFK 0
+    scoreboard players reset @a[scores={afkAviate=1..}] afkAviate
+
+  #B
+    scoreboard objectives add afkBoat minecraft.custom:minecraft.boat_one_cm
+    scoreboard players set @a[scores={afkBoat=1..}] AFK 0
+    scoreboard players reset @a[scores={afkBoat=1..}] afkBoat
+
+
+  #C
+    scoreboard objectives add afkCleanArmor minecraft.custom:minecraft.clean_armor
+    scoreboard players set @a[scores={afkCleanArmor=1..}] AFK 0
+    scoreboard players reset @a[scores={afkCleanArmor=1..}] afkCleanArmor
+    #
+    scoreboard objectives add afkCleanBanner minecraft.custom:minecraft.clean_banner
+    scoreboard players set @a[scores={afkCleanBanner=1..}] AFK 0
+    scoreboard players reset @a[scores={afkCleanBanner=1..}] afkCleanBanner
+    #
+    scoreboard objectives add afkClimb minecraft.custom:minecraft.climb_one_cm
+    scoreboard players set @a[scores={afkClimb=1..}] AFK 0
+    scoreboard players reset @a[scores={afkClimb=1..}] afkClimb
+    #
+    scoreboard objectives add afkCrouch minecraft.custom:minecraft.crouch_one_cm
+    scoreboard players set @a[scores={afkCrouch=1..}] AFK 0
+    scoreboard players reset @a[scores={afkCrouch=1..}] afkCrouch
+
+  #D
+    scoreboard objectives add afkDamageDealt minecraft.custom:minecraft.damage_dealt
+    scoreboard players set @a[scores={afkDamageDealt=1..}] AFK 0
+    scoreboard players reset @a[scores={afkDamageDealt=1..}] afkDamageDealt
+    #
+    scoreboard objectives add afkDeath deathCount
+    scoreboard players set @a[scores={afkDeath=1..}] AFK 0
+    scoreboard players reset * afkDeath
+    #
+    scoreboard objectives add afkDrop minecraft.custom:minecraft.drop
+    scoreboard players set @a[scores={afkDrop=1..}] AFK 0
+    scoreboard players reset @a[scores={afkDrop=1..}] afkDrop
+
+  #E
+    scoreboard objectives add afkEatCake minecraft.custom:minecraft.eat_cake_slice
+    scoreboard players set @a[scores={afkEatCake=1..}] AFK 0
+    scoreboard players reset @a[scores={afkEatCake=1..}] afkEatCake
+    #
+    scoreboard objectives add afkEnchant minecraft.custom:minecraft.enchant_item
+    scoreboard players set @a[scores={afkEnchant=1..}] AFK 0
+    scoreboard players reset @a[scores={afkEnchant=1..}] afkEnchant
+
+    #F
+    scoreboard objectives add afkFall minecraft.custom:minecraft.fall_one_cm
+    scoreboard players set @a[scores={afkFall=1..}] AFK 0
+    scoreboard players reset @a[scores={afkFall=1..}] afkFall
+    #
+    scoreboard objectives add afkFillCauldron minecraft.custom:minecraft.fill_cauldron
+    scoreboard players set @a[scores={afkFillCauldron=1..}] AFK 0
+    scoreboard players reset @a[scores={afkFillCauldron=1..}] afkFillCauldron
+    #
+    scoreboard objectives add afkFishCaught minecraft.custom:minecraft.fish_caught
+    scoreboard players set @a[scores={afkFishCaught=1..}] AFK 0
+    scoreboard players reset @a[scores={afkFishCaught=1..}] afkFishCaught
+    #
+    scoreboard objectives add afkFly minecraft.custom:minecraft.fly_one_cm
+    scoreboard players set @a[scores={afkFly=1..}] AFK 0
+    scoreboard players reset @a[scores={afkFly=1..}] afkFly
+
+  #H
+    scoreboard objectives add afkHorse minecraft.custom:minecraft.horse_one_cm
+    scoreboard players set @a[scores={afkHorse=1..}] AFK 0
+    scoreboard players reset @a[scores={afkHorse=1..}] afkHorse
+
+  #I
+    scoreboard objectives add afkInspectDispen minecraft.custom:minecraft.inspect_dispenser
+    scoreboard players set @a[scores={afkInspectDispen=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInspectDispen=1..}] afkInspectDispen
+    #
+    scoreboard objectives add afkInspectDroppe minecraft.custom:minecraft.inspect_dropper
+    scoreboard players set @a[scores={afkInspectDroppe=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInspectDroppe=1..}] afkInspectDroppe
+    #
+    scoreboard objectives add afkInspectHopper minecraft.custom:minecraft.inspect_hopper
+    scoreboard players set @a[scores={afkInspectHopper=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInspectHopper=1..}] afkInspectHopper
+    #
+    scoreboard objectives add afkInteractBeaco minecraft.custom:minecraft.interact_with_beacon
+    scoreboard players set @a[scores={afkInteractBeaco=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInteractBeaco=1..}] afkInteractBeaco
+    #
+    scoreboard objectives add afkInteractBrewi minecraft.custom:minecraft.interact_with_brewingstand
+    scoreboard players set @a[scores={afkInteractBrewi=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInteractBrewi=1..}] afkInteractBrewi
+    #
+    scoreboard objectives add afkInteractCraft minecraft.custom:minecraft.interact_with_crafting_table
+    scoreboard players set @a[scores={afkInteractCraft=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInteractCraft=1..}] afkInteractCraft
+    #
+    scoreboard objectives add afkInteractFurna minecraft.custom:minecraft.interact_with_furnace
+    scoreboard players set @a[scores={afkInteractFurna=1..}] AFK 0
+    scoreboard players reset @a[scores={afkInteractFurna=1..}] afkInteractFurna
+
+  #JKLM
+    scoreboard objectives add afkJump minecraft.custom:minecraft.jump
+    scoreboard players set @a[scores={afkJump=1..}] AFK 0
+    scoreboard players reset @a[scores={afkJump=1..}] afkJump
+    #
+    scoreboard objectives add afkKill totalKillCount
+    scoreboard players set @a[scores={afkKill=1..}] AFK 0
+    scoreboard players reset @a[scores={afkKill=1..}] afkKill
+    #
+    scoreboard objectives add afkLeaveGame minecraft.custom:minecraft.leave_game
+    scoreboard players set @a[scores={afkLeaveGame=1..}] AFK 0
+    scoreboard players reset @a[scores={afkLeaveGame=1..}] afkLeaveGame
+
+  #O
+    scoreboard objectives add afkOpenChest minecraft.custom:minecraft.open_chest
+    scoreboard players set @a[scores={afkOpenChest=1..}] AFK 0
+    scoreboard players reset @a[scores={afkOpenChest=1..}] afkOpenChest
+    #
+    scoreboard objectives add afkOpenEnder minecraft.custom:minecraft.open_enderchest
+    scoreboard players set @a[scores={afkOpenEnder=1..}] AFK 0
+    scoreboard players reset @a[scores={afkOpenEnder=1..}] afkOpenEnder
+    #
+    scoreboard objectives add afkOpenShulk minecraft.custom:minecraft.open_shulker_box
+    scoreboard players set @a[scores={afkOpenShulk=1..}] AFK 0
+    scoreboard players reset @a[scores={afkOpenShulk=1..}] afkOpenShulk
+
+  #P
+    scoreboard objectives add afkPlayNote minecraft.custom:minecraft.play_noteblock
+    scoreboard players set @a[scores={afkPlayNote=1..}] AFK 0
+    scoreboard players reset @a[scores={afkPlayNote=1..}] afkPlayNote
+    #
+    scoreboard objectives add afkPlayRecord minecraft.custom:minecraft.play_record
+    scoreboard players set @a[scores={afkPlayRecord=1..}] AFK 0
+    scoreboard players reset @a[scores={afkPlayRecord=1..}] afkPlayRecord
+    #
+    scoreboard objectives add afkPotFlower minecraft.custom:minecraft.pot_flower
+    scoreboard players set @a[scores={afkPotFlower=1..}] AFK 0
+    scoreboard players reset @a[scores={afkPotFlower=1..}] afkPotFlower
+
+  #R
+    scoreboard objectives add afkRotationY dummy
+    scoreboard objectives add afkRotationY- dummy
+    execute as @a store result score @s afkRotationX run data get entity @s Rotation[0]
+    execute as @a[tag=AFK] unless score @s afkRotationY = @s afkRotationY- run scoreboard players set @s AFK 0
+    execute as @a unless score @s afkRotationY = @s afkRotationY- run scoreboard players operation @s afkRotationY- = @s afkRotationY
+    #
+    scoreboard objectives add afkRotationX dummy
+    scoreboard objectives add afkRotationX- dummy
+    execute as @a store result score @s afkRotationX run data get entity @s Rotation[1]
+    execute as @a[tag=AFK] unless score @s afkRotationX = @s afkRotationX- run scoreboard players set @s AFK 0
+    execute as @a unless score @s afkRotationX = @s afkRotationX- run scoreboard players operation @s afkRotationX- = @s afkRotationX
+
+
+  #S
+    scoreboard objectives add afkSneak minecraft.custom:minecraft.sneak_time
+    scoreboard players set @a[scores={afkSneak=1..}] AFK 0
+    scoreboard players reset @a[scores={afkSneak=1..}] afkSneak
+    #
+    scoreboard objectives add afkSprint minecraft.custom:minecraft.sprint_one_cm
+    scoreboard players set @a[scores={afkSprint=1..}] AFK 0
+    scoreboard players reset @a[scores={afkSprint=1..}] afkSprint
+    #
+    scoreboard objectives add afkSwim minecraft.custom:minecraft.swim_one_cm
+    scoreboard players set @a[scores={afkSwim=1..}] AFK 0
+    scoreboard players reset @a[scores={afkSwim=1..}] afkSwim
+
+  #T
+    scoreboard objectives add afkTalked minecraft.custom:minecraft.talked_to_villager
+    scoreboard players set @a[scores={afkTalked=1..}] AFK 0
+    scoreboard players reset @a[scores={afkTalked=1..}] afkTalked
+    #
+    scoreboard objectives add afkTraded minecraft.custom:minecraft.traded_with_villager
+    scoreboard players set @a[scores={afkTraded=1..}] AFK 0
+    scoreboard players reset @a[scores={afkTraded=1..}] afkTraded
+    #
+    scoreboard objectives add afkTriggerTrappe minecraft.custom:minecraft.trigger_trapped_chest
+    scoreboard players set @a[scores={afkTriggerTrappe=1..}] AFK 0
+    scoreboard players reset @a[scores={afkTriggerTrappe=1..}] afkTriggerTrappe
+    #
+    scoreboard objectives add afkTuneNoteblock minecraft.custom:minecraft.tune_noteblock
+    scoreboard players set @a[scores={afkTuneNoteblock=1..}] AFK 0
+    scoreboard players reset @a[scores={afkTuneNoteblock=1..}] afkTuneNoteblock
+
+  #UW
+    scoreboard objectives add afkUseCauldron minecraft.custom:minecraft.use_cauldron
+    scoreboard players set @a[scores={afkUseCauldron=1..}] AFK 0
+    scoreboard players reset @a[scores={afkUseCauldron=1..}] afkUseCauldron
+    #
+    scoreboard objectives add afkWalk minecraft.custom:minecraft.walk_one_cm
+    scoreboard players set @a[scores={afkWalk=1..}] AFK 0
+    scoreboard players reset @a[scores={afkWalk=1..}] afkWalk
+    #
+    scoreboard objectives add afkWalkUndrWater minecraft.custom:minecraft.walk_under_water_one_cm
+    scoreboard players set @a[scores={afkWalkUndrWater=1..}] AFK 0
+    scoreboard players reset @a[scores={afkWalkUndrWater=1..}] afkWalkUndrWater
