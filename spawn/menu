@@ -5,17 +5,46 @@
 #le menu des TP
 #le menu des cosmetiques
 
+#note: L'avant dernier chifre dans le scorboard MenuSpawn signifie le menu dans lequel on est et le dernier le slot selectioner
+  #reset du 2e chifre
+    scoreboard players set @a[scores={MenuSpawn=10..19}] 10
+    scoreboard players set @a[scores={MenuSpawn=20..29}] 20
+    scoreboard players set @a[scores={MenuSpawn=30..39}] 30
+  #ajout du 2e chifre de MenuSpawn en fct du slot
+    scoreboard players add @a[nbt={SelectedItemSlot:0},scores={MenuSpawn=1..}] 0
+    scoreboard players add @a[nbt={SelectedItemSlot:1},scores={MenuSpawn=1..}] 1
+    scoreboard players add @a[nbt={SelectedItemSlot:2},scores={MenuSpawn=1..}] 2
+    scoreboard players add @a[nbt={SelectedItemSlot:3},scores={MenuSpawn=1..}] 3
+    scoreboard players add @a[nbt={SelectedItemSlot:4},scores={MenuSpawn=1..}] 4
+    scoreboard players add @a[nbt={SelectedItemSlot:5},scores={MenuSpawn=1..}] 5
+    scoreboard players add @a[nbt={SelectedItemSlot:6},scores={MenuSpawn=1..}] 6
+    scoreboard players add @a[nbt={SelectedItemSlot:7},scores={MenuSpawn=1..}] 7
+    scoreboard players add @a[nbt={SelectedItemSlot:8},scores={MenuSpawn=1..}] 8
+
 
 #l'anti menu en crea
   scoreboard players set @a[gamemode=creative] MenuSpawn -1
   
-#menu principal
-  #replace item 
-    replaceitem entity @a[scores={MenuSpawn=1}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Jeux\",\"color\":\"gold\"}"}}
-  #clique sur la canne a peche
-    scoreboard players set @a[scores={MenuSpawn=1,ClickMenu=1..},nbt={SelectedItem:{tag:{display:{Name:"{\"text\":\"Jeux\",\"color\":\"gold\"}"}}}}] MenuSpawn 1
+
+#menu principal (MenuSpawn=10..19)
+  replaceitem entity @a[scores={MenuSpawn=10..19}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Jeux\",\"color\":\"gold\"}"}}
+
 #menu tp jeux
-  #menu 1
-    replaceitem entity @a[scores={MenuSpawn=2}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Menu principal\",\"color\":\"gold\"}"}}
+  #menu 1 (MenuSpawn=20..29)
+    replaceitem entity @a[scores={MenuSpawn=20..29}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Menu principal\",\"color\":\"red\"}"}}    
     
-  #menu 2
+  #menu 2 (MenuSpawn=30..39)
+    
+
+#Si le joueur clique :
+  scoreboard players add @a[scores={ClickMenu=1..}] MenuSpawn 1000
+  #menu principal
+    scoreboard players set @a[scores={MenuSpawn=1010}] MenuSpawn 
+  #menu tp jeux
+    #menu 1
+      
+    #menu 2
+      
+
+#reset des scores
+  scoreboard players set @a ClickMenu 0
