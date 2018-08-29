@@ -1,7 +1,7 @@
 AYGAME :
 
 KAXE :
-
+  -cosmetiques
 MATHAYM :
   - GUI (Games Users Interface[Menu]) - avec VIANPYRO
 
@@ -20,7 +20,6 @@ VIANPYRO :
 
 À FAIRE :
   SPAWN
-    -cosmetiques
     -quetes anexes
   JEUX :
       -One-Shot
