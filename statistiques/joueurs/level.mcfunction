@@ -38,6 +38,6 @@
   execute as @a[scores={level=0..200}] if score @s XP >= @s XP2UP run tag @s add lvlup
   execute as @a[tag=lvlup] run scoreboard players add @s level 1
   execute as @a[tag=lvlup] run scoreboard players operation @s XP -= @s XP2UP
-  execute as @a[tag=lvlup] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Bravo ! Tu passe au niveau ","color":"green"},{"score":{"objective":"level","name":"@s"},"color":"gold","bold":"true"},{"text":" !","color":"green"}]
+  execute as @a[tag=lvlup] run tellraw @s ["",{"text":"§7§lServeur§r §8➤ "},{"text":"Bravo ! Tu passe au niveau ","color":"green"},{"score":{"objective":"level","name":"@s"},"color":"gold","bold":"true"},{"text":" !","color":"green"}]
   execute as @a[tag=lvlup] run playsound minecraft:entity.player.levelup master @s
   tag @a remove lvlup
