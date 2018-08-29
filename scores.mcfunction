@@ -12,7 +12,10 @@
   scoreboard players set #1200 SCORES 1200
   scoreboard players set #72000 SCORES 72000
   scoreboard players set #1728000 SCORES 1728000
-  
+ 
+#Dailybox
+  scoreboard objectives add dailyboxTimer dummy
+
 #Login
   scoreboard objectives add leaveGame minecraft.custom:minecraft.leave_game
   scoreboard objectives add unplayedTimeType dummy
