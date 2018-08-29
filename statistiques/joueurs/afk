@@ -1,4 +1,9 @@
+#Répétition ; RÉGULIÈRE/MANUELLE
 #© : AFK 100% Vianpyro
+#Cette fonction sert à détécter les joueurs inactifs, ici seront donc ;
+#Tous les réglages de temps du détécteur
+#Tous les messages en rapport avec le détécteur
+#Tous les scores en rapport avec le détécteur
 
 #Ajout d'un AFK/tick a tous les joueurs qui ne sont pas déjà AFK
   scoreboard players add @a[tag=!AFK] AFK 1
@@ -46,26 +51,14 @@
         execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedMin matches 1.. run scoreboard players set @s unplayedTimeType 1
         execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedHour matches 1.. run scoreboard players set @s unplayedTimeType 2
         execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if score @s unplayedDay matches 1.. run scoreboard players set @s unplayedTimeType 3
-      #English
-        #Seconds
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=0,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
-        #Minutes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=1,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
-        #Hours
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=2,language=0}] run tellraw @s ["",{"text":"§7§lServer§r §8▶ "},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
-        #Days
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=3,language=0}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Your last activity was ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"d ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min and ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec ago.","color":"green"}]
-
-      #Français
-        #Secondes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=0,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
-        #Minutes
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=1,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
-        #Heures
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=2,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
-        #Jours
-          execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=3,language=1}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"j ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
-  #Français
+      #Secondes
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=0,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+      #Minutes
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=1,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+      #Heures
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=2,language=1}] run tellraw @s ["",{"text":"§7§lServeur§r §8▶ "},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
+      #Jours
+        execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES if entity @s[scores={unplayedTimeType=3,language=1}] run tellraw @s ["",{"text":"Server ","color":"gray","bold":"true"},{"text":"▶ ","color":"dark_gray"},{"text":"Votre dernière activitée remonte à ","color":"green"},{"score":{"objective":"unplayedDay","name":"@s"},"color":"gold"},{"text":"j ","color":"green"},{"score":{"objective":"unplayedHour","name":"@s"},"color":"gold"},{"text":"h ","color":"green"},{"score":{"objective":"unplayedMin","name":"@s"},"color":"gold"},{"text":"min et ","color":"green"},{"score":{"objective":"unplayedSec","name":"@s"},"color":"gold"},{"text":"sec.","color":"green"}]
     execute as @a[tag=!AFK] if score @s AFK = #afkTimer SCORES run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" est AFK","color":"red"}]
     execute as @a[tag=AFK] if score @s AFK < #afkTimer SCORES run tellraw @a[scores={language=1}] ["",{"text":"§7§lServeur§r §8▶ "},{"selector":"@s"},{"text":" n'est plus AFK","color":"green"}]
   #Tags
