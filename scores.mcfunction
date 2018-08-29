@@ -12,7 +12,7 @@
   scoreboard players set #1200 SCORES 1200
   scoreboard players set #72000 SCORES 72000
   scoreboard players set #1728000 SCORES 1728000
-
+  
 #Login
   scoreboard objectives add leaveGame minecraft.custom:minecraft.leave_game
   scoreboard objectives add unplayedTimeType dummy
@@ -26,6 +26,13 @@
   execute unless score #maxID ID matches 0.. run scoreboard players add #maxID 0
 #Statistiques
   #Joueurs
+    #AFK
+      scoreboard players add #afkTimer SCORES 0
+      scoreboard players set #afkTimerMin SCORES 200
+      scoreboard players set #afkTimerMax SCORES 18000
+      scoreboard objectives add AFK dummy
+      scoreboard objectives add AfkAEC dummy
+      scoreboard objectives add AfkAECRVB dummy
     #Level
       scoreboard objectives add XP dummy
       scoreboard objectives add level dummy
@@ -35,3 +42,5 @@
       scoreboard objectives add XP2 dummy
       scoreboard objectives add XP3 dummy
       scoreboard objectives add xpDeath minecraft.custom:minecraft.time_since_death
+      #XpLevels
+        scoreboard objectives add levelTimer dummy
