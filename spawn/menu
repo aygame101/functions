@@ -1,0 +1,21 @@
+#Répétition : BOUCLE
+#Cette fonction sert a controler le menu du spawn, il y a donc  :
+#une partie evitant que les gens en crea dans le spawn ai le menu
+#le menu principal 
+#le menu des TP
+#le menu des cosmetiques
+
+
+#l'anti menu en crea
+  scoreboard players set @a[gamemode=creative] MenuSpawn -1
+  
+#menu principal
+  #replace item 
+    replaceitem entity @a[scores={MenuSpawn=1}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Jeux\",\"color\":\"gold\"}"}}
+  #clique sur la canne a peche
+    scoreboard players set @a[scores={MenuSpawn=1,ClickMenu=1..},nbt={SelectedItem:{tag:{display:{Name:"{\"text\":\"Jeux\",\"color\":\"gold\"}"}}}}] MenuSpawn 1
+#menu tp jeux
+  #menu 1
+    replaceitem entity @a[scores={MenuSpawn=2}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Menu principal\",\"color\":\"gold\"}"}}
+    
+  #menu 2
