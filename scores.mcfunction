@@ -44,3 +44,8 @@
       scoreboard objectives add xpDeath minecraft.custom:minecraft.time_since_death
       #XpLevels
         scoreboard objectives add levelTimer dummy
+#spawn
+  #menu tp
+    scoreboard objectives add ClickMenu minecraft.used:minecraft.carrot_on_a_stick
+    scoreboard objectives add MenuSpawn trigger
+    
