@@ -21,3 +21,7 @@
   scoreboard objectives add unplayedDay dummy
   scoreboard objectives add ID dummy
   execute unless score #maxID ID matches 0.. run scoreboard players add #maxID 0
+#Statistiques
+  #Joueurs
+    #Level
+      scoreboard objectives add XP dummy
