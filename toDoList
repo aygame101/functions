@@ -1,14 +1,18 @@
 AYGAME :
 
 KAXE :
-  -cosmetiques
+  - Cosmetiques
+  
 MATHAYM :
   - GUI (Games Users Interface[Menu]) - avec VIANPYRO
+  - Totem
 
 VIANPYRO :
   - Récompence journalière
   - GUI (Games Users Interface[Menu]) - avec MATHAYM
   - Tnt Run
+  - Zombie
+  - PvP Box
   - Bossbar du spawn
   - Micro-games secrets au spawn
   - Sidebar perso
@@ -20,20 +24,18 @@ VIANPYRO :
 
 À FAIRE :
   SPAWN
-    -quetes anexes
+    - Quêtes anexes
+    
   JEUX (Attention, faire en sorte de pouvoir le multiplier très facilement !!!):
       -One-Shot
       -Entrainement Rush (E. Rush)
       -Spleef
       -Jump Race
       -CréaBox
-      -Zombie
       -CréaCube
       -Eject
       -Tir aux pigeons (T.A.P.)
-      -PvP Box
       -Hit Them All
       -Sumo
       -Jardins Partagés
-      -Totem		
       -Ender Race
