@@ -32,18 +32,22 @@
 #menu tp jeux
   #menu 1 (MenuSpawn=20..29)
     replaceitem entity @a[scores={MenuSpawn=20..29}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Menu principal\",\"color\":\"red\"}"}}    
+    replaceitem entity @a[scores={MenuSpawn=20..29}] hotbar.8 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Page suivante\",\"color\":\"blue\"}"}}    
     
   #menu 2 (MenuSpawn=30..39)
+    replaceitem entity @a[scores={MenuSpawn=30..39}] hotbar.0 minecraft:carrot_on_a_stick{display:{Name:"{\"text\":\"Page précédente\",\"color\":\"red\"}"}}    
     
 
 #Si le joueur clique :
   scoreboard players add @a[scores={ClickMenu=1..}] MenuSpawn 1000
   #menu principal
-    scoreboard players set @a[scores={MenuSpawn=1010}] MenuSpawn 
+    scoreboard players set @a[scores={MenuSpawn=1010}] MenuSpawn 20
   #menu tp jeux
     #menu 1
-      
+      scoreboard players set @a[scores={MenuSpawn=1020}] MenuSpawn 10
+      scoreboard players set @a[scores={MenuSpawn=1028}] MenuSpawn 30
     #menu 2
+      scoreboard players set @a[scores={MenuSpawn=1030}] MenuSpawn 20
       
 
 #reset des scores
